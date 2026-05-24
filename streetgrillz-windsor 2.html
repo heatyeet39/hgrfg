@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StreetGrillz Windsor – Authentic Nigerian Street Food</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ember: #C84B11;
+    --ember-deep: #8B2F07;
+    --ember-glow: #E8651A;
+    --smoke: #1A1510;
+    --bone: #F5EFE6;
+    --cream: #FAF6F0;
+    --gold: #D4960A;
+    --gold-light: #F0C842;
+    --ash: #3D3028;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--smoke); color: var(--bone); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(26,21,16,0.93);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(200,75,17,0.2);
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: var(--ember-glow); letter-spacing: -0.5px; }
+  .nav-logo span { color: var(--gold-light); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { color: var(--bone); opacity: 0.8; text-decoration: none; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px; transition: opacity 0.2s, color 0.2s; }
+  .nav-links a:hover { opacity: 1; color: var(--ember-glow); }
+  .nav-cta { background: var(--ember); color: #fff; padding: 0.6rem 1.4rem; border-radius: 4px; font-weight: 600; font-size: 0.88rem; text-decoration: none; letter-spacing: 0.3px; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--ember-deep); }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 3.5rem 4rem 3rem; position: relative; z-index: 2;
+    background: linear-gradient(135deg, #0D0B08 0%, #1A1510 100%);
+  }
+  .hero-right { position: relative; overflow: hidden; }
+  .hero-right-grid { display: grid; grid-template-rows: 1fr 1fr; height: 100%; }
+  .hero-right-top { position: relative; overflow: hidden; }
+  .hero-right-bottom { display: grid; grid-template-columns: 1fr 1fr; }
+  .hero-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
+  .hero-img-wrap { overflow: hidden; position: relative; }
+  .hero-img-wrap:hover .hero-img { transform: scale(1.06); }
+  .hero-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, rgba(26,21,16,0.5));
+    pointer-events: none;
+  }
+  .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(200,75,17,0.15); border: 1px solid rgba(200,75,17,0.4); color: var(--ember-glow); font-size: 0.78rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 1.8rem; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.6rem, 4.5vw, 4.2rem); font-weight: 900; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1.4rem; }
+  .hero h1 em { font-style: normal; color: var(--ember-glow); }
+  .hero h1 span { color: var(--gold-light); }
+  .hero-desc { font-size: 1rem; font-weight: 300; line-height: 1.85; color: rgba(245,239,230,0.65); max-width: 440px; margin-bottom: 2.5rem; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-bottom: 3rem; }
+  .btn-primary { background: var(--ember); color: #fff; padding: 0.9rem 1.8rem; border-radius: 4px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: background 0.2s, transform 0.15s; border: none; cursor: pointer; display: inline-block; }
+  .btn-primary:hover { background: var(--ember-deep); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--bone); padding: 0.9rem 1.8rem; border-radius: 4px; font-weight: 500; font-size: 0.95rem; text-decoration: none; border: 1px solid rgba(245,239,230,0.25); transition: border-color 0.2s, background 0.2s; display: inline-block; }
+  .btn-ghost:hover { border-color: var(--bone); background: rgba(245,239,230,0.05); }
+  .hero-stats { display: flex; gap: 2.5rem; }
+  .hero-stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--ember-glow); display: block; }
+  .hero-stat-label { font-size: 0.72rem; font-weight: 500; color: rgba(245,239,230,0.45); letter-spacing: 1px; text-transform: uppercase; }
+  .hero-img-label { position: absolute; bottom: 0.8rem; left: 0.8rem; background: rgba(26,21,16,0.82); border: 1px solid rgba(200,75,17,0.3); color: var(--bone); font-size: 0.72rem; font-weight: 600; padding: 0.3rem 0.7rem; border-radius: 3px; letter-spacing: 0.5px; z-index: 2; }
+
+  /* HALAL BAR */
+  .halal-bar { background: linear-gradient(90deg, var(--ember-deep), var(--ember), var(--ember-deep)); padding: 0.9rem 3rem; display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+  .halal-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; font-weight: 600; color: #fff; letter-spacing: 0.3px; }
+  .halal-dot { width: 6px; height: 6px; background: var(--gold-light); border-radius: 50%; flex-shrink: 0; }
+
+  /* SIGNATURE DISHES STRIP */
+  .dishes-strip { padding: 0; overflow: hidden; }
+  .dishes-scroll { display: flex; gap: 0; }
+  .dish-tile { flex: 0 0 25%; position: relative; height: 360px; overflow: hidden; cursor: pointer; }
+  .dish-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
+  .dish-tile:hover img { transform: scale(1.08); }
+  .dish-tile-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,7,4,0.85) 0%, rgba(10,7,4,0.1) 55%, transparent 100%); transition: background 0.3s; }
+  .dish-tile:hover .dish-tile-overlay { background: linear-gradient(to top, rgba(200,75,17,0.7) 0%, rgba(10,7,4,0.2) 55%, transparent 100%); }
+  .dish-tile-info { position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; }
+  .dish-tile-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+  .dish-tile-price { font-size: 0.95rem; font-weight: 700; color: var(--gold-light); }
+  .dish-tile-badge { position: absolute; top: 1rem; right: 1rem; background: var(--ember); color: #fff; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.8px; padding: 0.25rem 0.6rem; border-radius: 2px; text-transform: uppercase; }
+  .dish-tile-badge.bogo { background: var(--gold); color: #1A1510; }
+
+  /* SECTION BASE */
+  section { padding: 6rem 3rem; }
+  .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--ember-glow); margin-bottom: 1rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; letter-spacing: -1px; line-height: 1.1; margin-bottom: 1.5rem; }
+  .section-title em { font-style: normal; color: var(--ember-glow); }
+
+  /* ABOUT */
+  .about { background: var(--smoke); }
+  .about-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .about-mosaic { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 220px 220px; gap: 10px; }
+  .mosaic-a { grid-column: 1; grid-row: 1 / 3; position: relative; overflow: hidden; border-radius: 3px; }
+  .mosaic-b { grid-column: 2; grid-row: 1; position: relative; overflow: hidden; border-radius: 3px; }
+  .mosaic-c { grid-column: 2; grid-row: 2; position: relative; overflow: hidden; border-radius: 3px; }
+  .mosaic-a img, .mosaic-b img, .mosaic-c img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
+  .mosaic-a:hover img, .mosaic-b:hover img, .mosaic-c:hover img { transform: scale(1.07); }
+  .mosaic-label { position: absolute; bottom: 0.7rem; left: 0.7rem; background: rgba(26,21,16,0.85); color: var(--ember-glow); font-size: 0.68rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 0.25rem 0.6rem; border-radius: 2px; }
+  .about-text p { font-size: 1rem; line-height: 1.9; color: rgba(245,239,230,0.7); margin-bottom: 1.2rem; }
+  .about-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+  .pillar { background: rgba(245,239,230,0.04); border: 1px solid rgba(245,239,230,0.08); padding: 1.2rem; border-radius: 4px; }
+  .pillar-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .pillar h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; color: var(--bone); }
+  .pillar p { font-size: 0.8rem; color: rgba(245,239,230,0.5); line-height: 1.5; }
+
+  /* PHOTO GALLERY */
+  .gallery { padding: 0 0 0; background: #100E0A; }
+  .gallery-header { padding: 5rem 3rem 2.5rem; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: 280px 280px; gap: 8px; padding: 0 8px 8px; }
+  .g1 { grid-column: 1 / 6; grid-row: 1; }
+  .g2 { grid-column: 6 / 9; grid-row: 1; }
+  .g3 { grid-column: 9 / 13; grid-row: 1; }
+  .g4 { grid-column: 1 / 4; grid-row: 2; }
+  .g5 { grid-column: 4 / 8; grid-row: 2; }
+  .g6 { grid-column: 8 / 13; grid-row: 2; }
+  .gallery-cell { position: relative; overflow: hidden; }
+  .gallery-cell img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+  .gallery-cell:hover img { transform: scale(1.06); }
+  .gallery-cell-overlay { position: absolute; inset: 0; background: rgba(10,7,4,0.0); transition: background 0.3s; }
+  .gallery-cell:hover .gallery-cell-overlay { background: rgba(200,75,17,0.15); }
+  .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(to top, rgba(10,7,4,0.8), transparent); font-size: 0.78rem; font-weight: 600; color: rgba(245,239,230,0.9); letter-spacing: 0.3px; opacity: 0; transition: opacity 0.3s; }
+  .gallery-cell:hover .gallery-caption { opacity: 1; }
+
+  /* MENU */
+  .menu-sec { background: #0D0B08; }
+  .menu-inner { max-width: 1100px; margin: 0 auto; }
+  .menu-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
+  .menu-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; background: rgba(245,239,230,0.04); border: 1px solid rgba(245,239,230,0.08); padding: 0.4rem; border-radius: 6px; }
+  .menu-tab { padding: 0.5rem 1.2rem; border-radius: 4px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s; color: rgba(245,239,230,0.55); border: none; background: transparent; }
+  .menu-tab.active { background: var(--ember); color: #fff; }
+  .menu-tab:hover:not(.active) { color: var(--bone); }
+  .menu-section { display: none; }
+  .menu-section.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+  .menu-card { background: rgba(245,239,230,0.03); border: 1px solid rgba(245,239,230,0.07); border-radius: 4px; overflow: hidden; transition: border-color 0.2s, transform 0.2s; }
+  .menu-card:hover { border-color: rgba(200,75,17,0.4); transform: translateY(-3px); }
+  .menu-img { height: 200px; overflow: hidden; position: relative; }
+  .menu-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+  .menu-card:hover .menu-img img { transform: scale(1.06); }
+  .menu-badge { position: absolute; top: 0.7rem; right: 0.7rem; background: var(--ember); color: #fff; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px; padding: 0.25rem 0.6rem; border-radius: 2px; text-transform: uppercase; }
+  .menu-badge.bogo { background: var(--gold); color: #1A1510; }
+  .menu-body { padding: 1.2rem 1.4rem; }
+  .menu-name { font-weight: 600; font-size: 1rem; margin-bottom: 0.4rem; color: var(--bone); }
+  .menu-desc { font-size: 0.8rem; color: rgba(245,239,230,0.5); line-height: 1.6; margin-bottom: 1rem; }
+  .menu-footer { display: flex; justify-content: space-between; align-items: center; }
+  .menu-price { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--ember-glow); }
+  .menu-order-btn { background: rgba(200,75,17,0.15); border: 1px solid rgba(200,75,17,0.3); color: var(--ember-glow); padding: 0.4rem 0.9rem; border-radius: 3px; font-size: 0.8rem; font-weight: 600; text-decoration: none; cursor: pointer; transition: background 0.2s; display: inline-block; }
+  .menu-order-btn:hover { background: var(--ember); color: #fff; border-color: var(--ember); }
+
+  /* FULL-WIDTH FEATURE BANNER */
+  .feature-banner { position: relative; height: 480px; overflow: hidden; display: flex; align-items: center; }
+  .feature-banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .feature-banner-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,7,4,0.88) 0%, rgba(10,7,4,0.4) 60%, transparent 100%); }
+  .feature-banner-content { position: relative; z-index: 2; padding: 0 3rem; max-width: 560px; }
+  .feature-banner-content .section-label { margin-bottom: 0.8rem; }
+  .feature-banner-content h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 900; letter-spacing: -1px; line-height: 1.1; margin-bottom: 1.2rem; }
+  .feature-banner-content p { font-size: 1rem; color: rgba(245,239,230,0.7); line-height: 1.8; margin-bottom: 2rem; }
+
+  /* ORDERING */
+  .ordering { background: var(--ash); }
+  .ordering-inner { max-width: 1100px; margin: 0 auto; }
+  .ordering-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; margin-top: 3rem; }
+  .order-option { background: rgba(245,239,230,0.04); border: 1px solid rgba(245,239,230,0.1); padding: 2rem; border-radius: 4px; transition: border-color 0.2s; }
+  .order-option:hover { border-color: var(--ember); }
+  .order-option-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .order-option h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .order-option p { font-size: 0.9rem; color: rgba(245,239,230,0.55); line-height: 1.7; margin-bottom: 1.5rem; }
+  .order-platforms { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .platform-btn { background: #fff; color: #1A1510; padding: 0.7rem 1.3rem; border-radius: 4px; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: transform 0.15s, box-shadow 0.15s; display: flex; align-items: center; gap: 0.4rem; }
+  .platform-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+  .platform-btn.uber { background: #000; color: #fff; }
+  .phone-link { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 1.4rem; font-weight: 700; color: var(--ember-glow); text-decoration: none; margin-bottom: 1rem; transition: color 0.2s; }
+  .phone-link:hover { color: var(--gold-light); }
+  .catering-note { margin-top: 3rem; padding: 2rem; background: rgba(200,75,17,0.08); border-left: 3px solid var(--ember); border-radius: 0 4px 4px 0; }
+  .catering-note h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--ember-glow); }
+  .catering-note p { font-size: 0.9rem; color: rgba(245,239,230,0.6); line-height: 1.7; }
+
+  /* REVIEWS */
+  .reviews { background: var(--smoke); }
+  .reviews-inner { max-width: 1100px; margin: 0 auto; }
+  .reviews-header-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
+  .rating-hero { display: flex; align-items: baseline; gap: 1rem; }
+  .rating-num { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; color: var(--gold-light); line-height: 1; }
+  .rating-stars { font-size: 1.3rem; color: var(--gold-light); }
+  .rating-count { font-size: 0.85rem; color: rgba(245,239,230,0.45); margin-top: 0.2rem; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+  .review-card { background: rgba(245,239,230,0.04); border: 1px solid rgba(245,239,230,0.08); padding: 1.8rem; border-radius: 4px; transition: border-color 0.2s; }
+  .review-card:hover { border-color: rgba(200,75,17,0.25); }
+  .review-stars { color: var(--gold-light); font-size: 0.9rem; margin-bottom: 1rem; }
+  .review-text { font-size: 0.95rem; line-height: 1.75; color: rgba(245,239,230,0.75); font-style: italic; margin-bottom: 1.2rem; }
+  .review-author { display: flex; align-items: center; gap: 0.8rem; }
+  .review-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--ember); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .review-name { font-size: 0.85rem; font-weight: 600; color: var(--bone); }
+  .review-via { font-size: 0.75rem; color: rgba(245,239,230,0.4); }
+  .google-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(245,239,230,0.06); border: 1px solid rgba(245,239,230,0.1); padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.8rem; color: rgba(245,239,230,0.6); text-decoration: none; }
+
+  /* INFO */
+  .info { background: #0D0B08; }
+  .info-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+  .hours-table { width: 100%; margin-top: 1.5rem; }
+  .hours-table tr { border-bottom: 1px solid rgba(245,239,230,0.06); }
+  .hours-table td { padding: 0.9rem 0; font-size: 0.9rem; }
+  .hours-table td:first-child { color: rgba(245,239,230,0.5); }
+  .hours-table td:last-child { text-align: right; font-weight: 500; }
+  .hours-table tr.today td { color: var(--ember-glow); }
+  .hours-table tr.today td:first-child { font-weight: 600; }
+  .map-embed { margin-top: 1.5rem; border-radius: 4px; overflow: hidden; border: 1px solid rgba(245,239,230,0.08); }
+  .address-details { margin-top: 1.5rem; }
+  .address-line { display: flex; gap: 0.8rem; align-items: flex-start; margin-bottom: 1rem; font-size: 0.9rem; color: rgba(245,239,230,0.65); line-height: 1.6; }
+  .address-icon { color: var(--ember-glow); margin-top: 2px; font-size: 1rem; flex-shrink: 0; }
+
+  /* SOCIAL */
+  .social-strip { background: var(--ash); padding: 4rem 3rem; text-align: center; }
+  .social-strip p { font-size: 1.1rem; font-weight: 300; color: rgba(245,239,230,0.6); margin-bottom: 1.5rem; }
+  .social-link { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--ember-glow); font-size: 1rem; font-weight: 600; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: color 0.2s; }
+  .social-link:hover { color: var(--gold-light); }
+
+  /* FOOTER */
+  footer { background: #080705; padding: 3rem; border-top: 1px solid rgba(245,239,230,0.07); }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: var(--ember-glow); }
+  .footer-logo span { color: var(--gold-light); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { font-size: 0.82rem; color: rgba(245,239,230,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--bone); }
+  .footer-copy { font-size: 0.78rem; color: rgba(245,239,230,0.25); }
+
+  /* ANIM */
+  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { height: 55vw; }
+    .hero-right-bottom { grid-template-columns: 1fr 1fr; }
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-inner, .ordering-grid, .info-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .dishes-scroll { flex-wrap: wrap; }
+    .dish-tile { flex: 0 0 50%; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 200px); }
+    .g1,.g2,.g3,.g4,.g5,.g6 { grid-column: auto; grid-row: auto; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+    .halal-bar { padding: 1rem 1.5rem; gap: 1rem; }
+    .feature-banner { height: auto; padding: 4rem 0; }
+    .feature-banner img { opacity: 0.4; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Street<span>Grillz</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#order">Order</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#info">Location</a></li>
+  </ul>
+  <a href="#order" class="nav-cta">Order Now</a>
+</nav>
+
+<!-- HERO — split grid with real dish images -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">🔥 Halal Certified · Windsor, Ontario</div>
+    <h1>Authentic<br><em>Nigerian</em><br><span>Street Food</span></h1>
+    <p class="hero-desc">Bold West African flavours. Flame-grilled suya. Smoky jollof rice. Freshly made pies. Windsor's home of real Nigerian street food — open daily from 2 PM.</p>
+    <div class="hero-actions">
+      <a href="#order" class="btn-primary">Order Online</a>
+      <a href="#menu" class="btn-ghost">View Full Menu</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">5.0</span>
+        <span class="hero-stat-label">Google Rating</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">100%</span>
+        <span class="hero-stat-label">Halal</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">🔥</span>
+        <span class="hero-stat-label">Fire Grilled</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-grid">
+      <div class="hero-img-wrap hero-right-top">
+        <img class="hero-img" src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=900&q=85" alt="Beef Suya skewers fire grilled">
+        <div class="hero-img-overlay"></div>
+        <div class="hero-img-label">🔥 Beef Suya — #1 Most Liked</div>
+      </div>
+      <div class="hero-right-bottom">
+        <div class="hero-img-wrap">
+          <img class="hero-img" src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&q=80" alt="Smoky Nigerian Jollof Rice">
+          <div class="hero-img-overlay"></div>
+          <div class="hero-img-label">Smoky Jollof Rice</div>
+        </div>
+        <div class="hero-img-wrap">
+          <img class="hero-img" src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=600&q=80" alt="Chicken Suya grilled">
+          <div class="hero-img-overlay"></div>
+          <div class="hero-img-label">Chicken Suya</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HALAL BAR -->
+<div class="halal-bar">
+  <div class="halal-item"><div class="halal-dot"></div> 100% Halal Certified</div>
+  <div class="halal-item"><div class="halal-dot"></div> Authentic Nigerian Flavours</div>
+  <div class="halal-item"><div class="halal-dot"></div> Delivery & Pickup Available</div>
+  <div class="halal-item"><div class="halal-dot"></div> Catering for Events & Festivals</div>
+  <div class="halal-item"><div class="halal-dot"></div> Happy Hour Food Deals</div>
+</div>
+
+<!-- SIGNATURE DISH TILES -->
+<div class="dishes-strip">
+  <div class="dishes-scroll">
+    <div class="dish-tile">
+      <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=700&q=80" alt="Beef Suya">
+      <div class="dish-tile-overlay"></div>
+      <div class="dish-tile-badge">🏆 #1</div>
+      <div class="dish-tile-info">
+        <div class="dish-tile-name">Beef Suya</div>
+        <div class="dish-tile-price">$19.99</div>
+      </div>
+    </div>
+    <div class="dish-tile">
+      <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=700&q=80" alt="Smoky Jollof Rice">
+      <div class="dish-tile-overlay"></div>
+      <div class="dish-tile-badge">#2 Fav</div>
+      <div class="dish-tile-info">
+        <div class="dish-tile-name">Smoky Jollof Rice</div>
+        <div class="dish-tile-price">from $19.99</div>
+      </div>
+    </div>
+    <div class="dish-tile">
+      <img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=700&q=80" alt="Chicken Suya">
+      <div class="dish-tile-overlay"></div>
+      <div class="dish-tile-badge bogo">Buy 1 Get 1</div>
+      <div class="dish-tile-info">
+        <div class="dish-tile-name">Chicken Suya</div>
+        <div class="dish-tile-price">$18.99</div>
+      </div>
+    </div>
+    <div class="dish-tile">
+      <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=700&q=80" alt="Ewa Agoyin with Plantain">
+      <div class="dish-tile-overlay"></div>
+      <div class="dish-tile-info">
+        <div class="dish-tile-name">Ewa Agoyin & Plantain</div>
+        <div class="dish-tile-price">$19.99</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-mosaic fade-up">
+      <div class="mosaic-a">
+        <img src="https://images.unsplash.com/photo-1544025162-d76594f18d65?w=700&q=80" alt="Flame grilling Nigerian food">
+        <div class="mosaic-label">Fire Grilled</div>
+      </div>
+      <div class="mosaic-b">
+        <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&q=80" alt="Suya spices yaji">
+        <div class="mosaic-label">Yaji Spiced</div>
+      </div>
+      <div class="mosaic-c">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80" alt="Fresh West African food">
+        <div class="mosaic-label">Freshly Made</div>
+      </div>
+    </div>
+    <div class="about-text fade-up">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-title">The <em>Streets</em> of Lagos, Right Here in Windsor</h2>
+      <p>StreetGrillz is a Nigerian street food restaurant serving authentic Halal grilled favourites, bold West African flavours, and freshly prepared comfort meals right here in Windsor, Ontario.</p>
+      <p>Inspired by the vibrant street food culture of Nigeria, we bring smoky grills, rich spices, and casual dining together in one place — from suya-spiced grilled meats and flame-grilled dishes, to smoky jollof rice, Nigerian pies, and tropical drinks.</p>
+      <p>Every dish is crafted to carry you to the bustling evening food stalls of Lagos and Abuja — where the smoke rises, the skewers sizzle, and every bite tells a story.</p>
+      <div class="about-pillars">
+        <div class="pillar"><div class="pillar-icon">🔥</div><h4>Fire Grilled</h4><p>Every meat kissed by open flame for authentic smoky char</p></div>
+        <div class="pillar"><div class="pillar-icon">✅</div><h4>Halal Certified</h4><p>100% halal ingredients — always fresh, always trustworthy</p></div>
+        <div class="pillar"><div class="pillar-icon">🌶️</div><h4>Bold Spices</h4><p>Yaji-seasoned blends made from our authentic family recipe</p></div>
+        <div class="pillar"><div class="pillar-icon">🎉</div><h4>Catering</h4><p>Events, festivals, gatherings — we bring the grill to you</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FULL-WIDTH SUYA BANNER -->
+<div class="feature-banner">
+  <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1600&q=85" alt="Suya skewers on the grill">
+  <div class="feature-banner-overlay"></div>
+  <div class="feature-banner-content">
+    <div class="section-label">Signature Dish</div>
+    <h2>The Suya That<br><em>Everyone's</em> Talking About</h2>
+    <p>"Everything about this Beef Suya Combo is authentic. Takes me right back home — the spices, the char on the meat, the way it's served." — Google Review ★★★★★</p>
+    <a href="#order" class="btn-primary">Order Beef Suya — $19.99</a>
+  </div>
+</div>
+
+<!-- PHOTO GALLERY -->
+<div class="gallery" id="gallery">
+  <div class="gallery-header fade-up">
+    <div class="section-label">From Our Kitchen</div>
+    <h2 class="section-title">Real Food. <em>Real Fire.</em></h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-cell g1">
+      <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=900&q=80" alt="Beef Suya skewers">
+      <div class="gallery-cell-overlay"></div>
+      <div class="gallery-caption">Beef Suya — fire-grilled perfection</div>
+    </div>
+    <div class="gallery-cell g2">
+      <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=600&q=80" alt="Ewa Agoyin beans plantain">
+      <div class="gallery-cell-overlay"></div>
+      <div class="gallery-caption">Ewa Agoyin with fried plantain</div>
+    </div>
+    <div class="gallery-cell g3">
+      <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&q=80" alt="West African spiced food">
+      <div class="gallery-cell-overlay"></div>
+      <div class="gallery-caption">Bold West African flavours</div>
+    </div>
+    <div class="gallery-cell g4">
+      <img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=600&q=80" alt="Chicken Suya grilled">
+      <div class="gallery-cell-overlay"></div>
+      <div class="gallery-caption">Chicken Suya — buy 1 get 1 free</div>
+    </div>
+    <div class="gallery-cell g5">
+      <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=700&q=80" alt="Smoky Jollof Rice">
+      <div class="gallery-cell-overlay"></div>
+      <div class="gallery-caption">Smoky Nigerian Jollof Rice</div>
+    </div>
+    <div class="gallery-cell g6">
+      <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=700&q=80" alt="Nigerian street food spread">
+      <div class="gallery-cell-overlay"></div>
+      <div class="gallery-caption">Fresh combos — made to order</div>
+    </div>
+  </div>
+</div>
+
+<!-- MENU -->
+<section class="menu-sec" id="menu">
+  <div class="menu-inner">
+    <div class="menu-header fade-up">
+      <div>
+        <div class="section-label">Our Menu</div>
+        <h2 class="section-title">Grilled to <em>Perfection</em></h2>
+      </div>
+      <div class="menu-tabs">
+        <button class="menu-tab active" onclick="filterMenu('food', this)">Food</button>
+        <button class="menu-tab" onclick="filterMenu('beverage', this)">Drinks</button>
+        <button class="menu-tab" onclick="filterMenu('snacks', this)">Snacks</button>
+      </div>
+    </div>
+
+    <!-- FOOD -->
+    <div class="menu-section active" id="menu-food">
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=700&q=80" alt="Beef Suya">
+          <div class="menu-badge">#1 Most Liked</div>
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Beef Suya</div>
+          <div class="menu-desc">Fire-grilled beef skewers with Nigerian yaji spice, served with crisp onions, fresh tomatoes, and your choice of side. Contains nuts.</div>
+          <div class="menu-footer"><div class="menu-price">$19.99</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=700&q=80" alt="Smoky Jollof Rice with Chicken">
+          <div class="menu-badge">#2 Most Liked</div>
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Smoky Jollof Meal With Chicken</div>
+          <div class="menu-desc">Smoky Nigerian jollof rice in a seasoned tomato and pepper base, served with chicken suya, coleslaw and pop. Contains peanuts.</div>
+          <div class="menu-footer"><div class="menu-price">$24.99</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=700&q=80" alt="Chicken Suya">
+          <div class="menu-badge bogo">Buy 1 Get 1 Free</div>
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Chicken Suya</div>
+          <div class="menu-desc">Fire-grilled juicy chicken suya packed with bold spices, served alongside your choice of crispy fries or crunchy coleslaw. #3 most liked.</div>
+          <div class="menu-footer"><div class="menu-price">$18.99</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=700&q=80" alt="Ewa Agoyin With Plantain">
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Ewa Agoyin With Plantain</div>
+          <div class="menu-desc">Creamy mashed beans topped with rich, smoky, spicy palm oil pepper sauce, served with golden fried plantain.</div>
+          <div class="menu-footer"><div class="menu-price">$19.99</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=700&q=80" alt="Chicken Suya Combo With Fries">
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Chicken Suya Combo With Fries</div>
+          <div class="menu-desc">Flame-grilled chicken suya with Nigerian yaji spice. Served with tomatoes, onions, cucumber, a pop, and fries. Contains peanuts.</div>
+          <div class="menu-footer"><div class="menu-price">$24.99</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1544025162-d76594f18d65?w=700&q=80" alt="Beef Suya Combo With Fries">
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Beef Suya Combo With Fries</div>
+          <div class="menu-desc">Flame-grilled beef suya with Nigerian yaji spice, served with tomatoes, onions, cucumber, pop, and fries. Contains peanuts.</div>
+          <div class="menu-footer"><div class="menu-price">$25.99</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=700&q=80" alt="Smoky Jollof Rice With Beef">
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Smoky Jollof Rice With Beef</div>
+          <div class="menu-desc">Smoky Nigerian jollof rice in a rich tomato and pepper base, with halal beef suya, plantain or coleslaw, and a pop. Contains peanuts.</div>
+          <div class="menu-footer"><div class="menu-price">$25.99</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=700&q=80" alt="Smoky Jollof Rice With Chicken">
+          <div class="menu-badge">Popular</div>
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Smoky Jollof Rice With 1 Piece Chicken</div>
+          <div class="menu-desc">Classic smoky Nigerian jollof rice with one piece of grilled chicken. A popular, satisfying combination.</div>
+          <div class="menu-footer"><div class="menu-price">$19.99</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEVERAGES -->
+    <div class="menu-section" id="menu-beverage">
+      <div class="menu-card fade-up">
+        <div class="menu-img" style="background:linear-gradient(135deg,#8B1A1A,#C84B11); display:flex; align-items:center; justify-content:center;">
+          <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=700&q=80" alt="Chapman Nigerian cocktail drink">
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Streetgrillz Chapman</div>
+          <div class="menu-desc">Our signature house Chapman cocktail — sweet, fizzy, and tropical. A beloved Nigerian party staple, made in-house.</div>
+          <div class="menu-footer"><div class="menu-price">$8.99</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1497534446932-c925b458314e?w=700&q=80" alt="Tropical fruit punch drink">
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Tropical Rhythms – Fruit Punch</div>
+          <div class="menu-desc">Vibrant tropical fruit punch with bold Caribbean flair. Refreshing and sweet.</div>
+          <div class="menu-footer"><div class="menu-price">$3.49</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1546173159-315724a31696?w=700&q=80" alt="Mango tropical drink">
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Tropical Rhythms – Mango</div>
+          <div class="menu-desc">Tropical mango drink bursting with natural fruit flavour. A Caribbean classic.</div>
+          <div class="menu-footer"><div class="menu-price">$3.49</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?w=700&q=80" alt="Vita Malt non-alcoholic malt drink">
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Vita Malt</div>
+          <div class="menu-desc">Non-alcoholic malt beverage — rich, smooth, and beloved across West Africa. 330ml can.</div>
+          <div class="menu-footer"><div class="menu-price">$2.99</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1554866585-cd94860890b7?w=700&q=80" alt="Coca Cola can">
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Coca-Cola Can</div>
+          <div class="menu-desc">Classic Coca-Cola in a can. The perfect companion for spicy suya.</div>
+          <div class="menu-footer"><div class="menu-price">$2.50</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=700&q=80" alt="Fanta orange can">
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Fanta Can</div>
+          <div class="menu-desc">Fanta orange — 330cl can. Sweet, fizzy, and refreshing.</div>
+          <div class="menu-footer"><div class="menu-price">$2.50</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1437418747212-8d9709afab22?w=700&q=80" alt="Schweppes tonic water">
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Schweppes Drink</div>
+          <div class="menu-desc">Crisp and refreshing Schweppes tonic or ginger ale.</div>
+          <div class="menu-footer"><div class="menu-price">$3.29</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=700&q=80" alt="Bottled water">
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Water</div>
+          <div class="menu-desc">Refreshing bottled water.</div>
+          <div class="menu-footer"><div class="menu-price">$1.59</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SNACKS -->
+    <div class="menu-section" id="menu-snacks">
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1608835291093-394b0c943a75?w=700&q=80" alt="Nigerian Chicken Pie flaky pastry">
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Chicken Pie</div>
+          <div class="menu-desc">Flaky golden pastry filled with seasoned chicken and vegetables. A savoury Nigerian-style snack — hearty, tasty, perfect on the go.</div>
+          <div class="menu-footer"><div class="menu-price">$6.99</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-img">
+          <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=700&q=80" alt="Nigerian Meat Pie golden pastry">
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Meat Pie</div>
+          <div class="menu-desc">Flaky golden pastry filled with seasoned minced meat and vegetables. A savoury Nigerian-style snack — hearty, flavourful, perfect on the go.</div>
+          <div class="menu-footer"><div class="menu-price">$6.99</div><a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="menu-order-btn">Order →</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOLLOF FEATURE BANNER -->
+<div class="feature-banner">
+  <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=1600&q=85" alt="Smoky Nigerian Jollof Rice">
+  <div class="feature-banner-overlay"></div>
+  <div class="feature-banner-content">
+    <div class="section-label">West African Classic</div>
+    <h2>Smoky Jollof Rice<br><em>Done Right</em></h2>
+    <p>Cooked in a rich tomato and pepper base with that unmistakable smoky depth. Served with suya, coleslaw, and a pop. This is the jollof people fight over.</p>
+    <a href="#order" class="btn-primary">Order Jollof Meal — from $19.99</a>
+  </div>
+</div>
+
+<!-- ORDERING -->
+<section class="ordering" id="order">
+  <div class="ordering-inner">
+    <div class="fade-up">
+      <div class="section-label">Order Now</div>
+      <h2 class="section-title">Ready When <em>You Are</em></h2>
+      <p style="color:rgba(245,239,230,0.6); font-size:1rem; max-width:500px; line-height:1.8; margin-top:0.5rem;">
+        Order online for pickup or delivery through Uber Eats, or call us directly. Open daily from 2 PM.
+      </p>
+    </div>
+    <div class="ordering-grid">
+      <div class="order-option fade-up">
+        <div class="order-option-icon">🛵</div>
+        <h3>Delivery & Pickup</h3>
+        <p>Order through Uber Eats for delivery to your door, or swing by our Walker Road location for pickup. Available daily from 2 PM.</p>
+        <div class="order-platforms">
+          <a href="https://www.ubereats.com/ca/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="platform-btn uber">🚗 Uber Eats</a>
+          <a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="platform-btn">📦 Order Pickup</a>
+        </div>
+      </div>
+      <div class="order-option fade-up">
+        <div class="order-option-icon">📞</div>
+        <h3>Call Us Directly</h3>
+        <p>Prefer to speak to someone? Give us a call to place your order or ask about our catering services for your next event or festival.</p>
+        <a href="tel:+12262604850" class="phone-link">📞 (226) 260-4850</a>
+        <div style="font-size:0.82rem; color:rgba(245,239,230,0.4);">4185 Walker Rd #100, Windsor, ON N8W 3T6</div>
+      </div>
+    </div>
+    <div class="catering-note fade-up">
+      <h3>🎉 Catering Available</h3>
+      <p>Planning an event, festival, or large gathering? StreetGrillz offers full catering services bringing authentic Nigerian street food to your occasion. Call us at (226) 260-4850 to discuss your event.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="reviews-inner">
+    <div class="reviews-header-row fade-up">
+      <div>
+        <div class="section-label">Customer Reviews</div>
+        <h2 class="section-title">What Windsor <em>Is Saying</em></h2>
+        <div class="rating-hero">
+          <div class="rating-num">5.0</div>
+          <div>
+            <div class="rating-stars">★★★★★</div>
+            <div class="rating-count">11 Google Reviews</div>
+          </div>
+        </div>
+      </div>
+      <a href="https://www.google.com/maps/place/StreetGrillz" target="_blank" class="google-badge">🌐 View all Google reviews</a>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The service was excellent, and the food was even better. This place exceeded every expectation I had — the suya is genuinely something special."</p>
+        <div class="review-author"><div class="review-avatar">GR</div><div><div class="review-name">Google Reviewer</div><div class="review-via">via Google Maps</div></div></div>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Everything about this Beef Suya Combo is authentic. Takes me right back home — the spices, the char on the meat, the way it's served. Perfection."</p>
+        <div class="review-author"><div class="review-avatar">GR</div><div><div class="review-name">Google Reviewer</div><div class="review-via">via Google Maps</div></div></div>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The owner is also very friendly — you can tell they genuinely care about the food and the experience. Fantastic spot. Will be coming back regularly."</p>
+        <div class="review-author"><div class="review-avatar">GR</div><div><div class="review-name">Google Reviewer</div><div class="review-via">via Google Maps</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="info" id="info">
+  <div class="info-inner">
+    <div class="fade-up">
+      <div class="section-label">Hours & Location</div>
+      <h2 class="section-title">Find <em>Us</em></h2>
+      <table class="hours-table">
+        <tr><td>Monday</td><td>2:00 PM – 10:00 PM</td></tr>
+        <tr><td>Tuesday</td><td>2:00 PM – 10:00 PM</td></tr>
+        <tr><td>Wednesday</td><td>2:00 PM – 10:00 PM</td></tr>
+        <tr><td>Thursday</td><td>2:00 PM – 10:00 PM</td></tr>
+        <tr><td>Friday</td><td>2:00 PM – 10:00 PM</td></tr>
+        <tr><td>Saturday</td><td>1:00 PM – 10:00 PM</td></tr>
+        <tr class="today"><td>Sunday</td><td>1:00 PM – 10:00 PM</td></tr>
+      </table>
+      <div class="address-details" style="margin-top:2rem;">
+        <div class="address-line"><span class="address-icon">📍</span><span>4185 Walker Rd #100<br>Windsor, ON N8W 3T6</span></div>
+        <div class="address-line"><span class="address-icon">📞</span><a href="tel:+12262604850" style="color:var(--ember-glow); text-decoration:none;">(226) 260-4850</a></div>
+        <div class="address-line"><span class="address-icon">📸</span><a href="https://www.instagram.com/streetgrillzwindsor/" target="_blank" style="color:var(--ember-glow); text-decoration:none;">@streetgrillzwindsor</a></div>
+      </div>
+    </div>
+    <div class="fade-up">
+      <div class="map-embed">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2950.0!2d-83.0093!3d42.2890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883b2b8d4e950f73%3A0xa7e114a6857b1a04!2sStreetGrillz!5e0!3m2!1sen!2sca!4v1000000000000" width="100%" height="360" style="border:0; display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="StreetGrillz Windsor map"></iframe>
+      </div>
+      <div style="margin-top:1.5rem; display:flex; flex-direction:column; gap:0.75rem;">
+        <a href="https://www.order.store/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank" class="btn-primary" style="text-align:center;">Order Online Now</a>
+        <a href="https://maps.google.com/?q=StreetGrillz+Windsor+4185+Walker+Rd" target="_blank" class="btn-ghost" style="text-align:center;">Get Directions</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<div class="social-strip">
+  <div class="section-label" style="margin-bottom:0.5rem;">Stay Connected</div>
+  <p>Follow us on Instagram for daily specials, new dishes, and behind-the-flames content.</p>
+  <a href="https://www.instagram.com/streetgrillzwindsor/" target="_blank" class="social-link">📸 @streetgrillzwindsor</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Street<span>Grillz</span></div>
+    <div class="footer-links">
+      <a href="#menu">Menu</a>
+      <a href="#order">Order</a>
+      <a href="https://www.instagram.com/streetgrillzwindsor/" target="_blank">Instagram</a>
+      <a href="https://www.ubereats.com/ca/store/streetgrillz/VL1T-7RTXd6wbBycLdfgFw" target="_blank">Uber Eats</a>
+      <a href="tel:+12262604850">(226) 260-4850</a>
+    </div>
+    <div class="footer-copy">© 2026 StreetGrillz Windsor · 4185 Walker Rd #100, Windsor, ON</div>
+  </div>
+</footer>
+
+<script>
+  function filterMenu(cat, btn) {
+    document.querySelectorAll('.menu-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('menu-' + cat).classList.add('active');
+    btn.classList.add('active');
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 70);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
